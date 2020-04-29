@@ -51,6 +51,31 @@ def load_ipv4_data(ipv4_data_cursor, date):
         reported_at=date,
     )
 
+
+def load_user_country_mapping(date):
+    logging.info(f"Loading user_country_mapping to database for: {date}.")
+    user_country_mapping = QUERIES_FOLDER / "user_country_mapping.sql"
+    user_country_mapping = (
+        user_country_mapping.absolute().read_text().format_map({"reported_at": date})
+    )
+
+    with sql_connection() as conn:
+        df = pd.read_sql(user_country_mapping, con=conn)
+
+    user_country_data_cursor = (row for row in df.T.reset_index().values.T.tolist())
+    create_table_ddl = QUERIES_FOLDER / "create_user_country_mapping_table.sql"
+    delete_existing_data_sql = (
+        QUERIES_FOLDER / "delete_existing_user_country_mapping.sql"
+    )
+
+    data_loader(
+        data_cursor=user_country_data_cursor,
+        table_name="USER_COUNTRY_MAPPING",
+        create_table_ddl=create_table_ddl,
+        delete_existing_data_sql=delete_existing_data_sql,
+        reported_at=date,
+    )
+
 def data_loader(
     data_cursor, table_name, create_table_ddl, delete_existing_data_sql, **delete_params
 ):
