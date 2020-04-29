@@ -39,7 +39,7 @@ def load_user_ip_address_data(user_ip_address_cursor):
 
 def load_ipv4_data(ipv4_data_cursor, date):
     """Loads the IPV4 data for a particular day to the IPV4_DATA table."""
-    logging.info(f"Loading ipv4_data for to database for: {date}.")
+    logging.info(f"Loading ipv4_data to database for: {date}.")
     create_table_ddl = QUERIES_FOLDER / "create_ipv4_data_table.sql"
     delete_existing_data_sql = QUERIES_FOLDER / "delete_existing_ipv4_data.sql"
 
