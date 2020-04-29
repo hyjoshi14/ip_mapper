@@ -76,6 +76,23 @@ def load_user_country_mapping(date):
         reported_at=date,
     )
 
+
+def get_user_country_distribution(date):
+    """
+    Validate the results of the ETL job by listing the Top 10 Countries with the most Users.
+    """
+    validation_sql = QUERIES_FOLDER / "validation.sql"
+    validation_sql = (
+        validation_sql.absolute().read_text().format_map({"reported_at": date})
+    )
+
+    with sql_connection() as conn:
+        df = pd.read_sql(validation_sql, con=conn)
+
+    logging.info(f"Carrying out validation for: {date}")
+    print(df.head(20))
+
+
 def data_loader(
     data_cursor, table_name, create_table_ddl, delete_existing_data_sql, **delete_params
 ):
