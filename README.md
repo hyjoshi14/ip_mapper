@@ -74,6 +74,7 @@ Each file contains data following the below listed description.
 
 ### Using IP Mapper
 To use IP Mapper to ingest data and run validations, use the following command.
+
 Example: Ingesting data for 1st Jan 2020.
 ```
 python etl.py --date '2020-01-01'

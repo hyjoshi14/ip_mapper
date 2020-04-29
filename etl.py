@@ -27,7 +27,10 @@ parser.add_argument(
     "--date",
     dest="date",
     default=get_max_run_day(),
-    help=("Date for which the ETL job is to be carried out." " Defaults to yesterday."),
+    help=(
+        "Date for which the ETL job is to be carried out. Defaults to yesterday."
+        " Should be in 'YYYY-MM-DD' format."
+    ),
     type=not_future_date,
 )
 
