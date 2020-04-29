@@ -1,0 +1,1 @@
+DELETE FROM IPV4_DATA WHERE REPORTED_AT = '{reported_at}';
