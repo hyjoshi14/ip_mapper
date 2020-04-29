@@ -86,10 +86,10 @@ def get_ipv4_file_address(ipv4_page_content, date):
         AssertionError
     """
     available_dates = re.findall(
-        "(\d{4}-\d{2}-\d{2}) \d{2}:\d{2}\s*\d\.\dM", ipv4_page_content
+        r"(\d{4}-\d{2}-\d{2}) \d{2}:\d{2}\s*\d\.\dM", ipv4_page_content
     )
     available_files = re.findall(
-        'href="(IpToCountry\.\d{10}\.csv\.gz)', ipv4_page_content
+        r'href="(IpToCountry\.\d{10}\.csv\.gz)', ipv4_page_content
     )
 
     assert len(available_dates) == len(
