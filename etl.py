@@ -1,5 +1,4 @@
 import argparse
-from datetime import datetime, timedelta
 
 from ip_mapper.extractor import get_raw_ipv4_data, get_max_run_day
 from ip_mapper.loader import (
@@ -12,7 +11,8 @@ from ip_mapper.transformer import transform_user_ip_addr_file
 
 
 def not_future_date(date):
-    if date > get_max_run_day():
+    max_run_day = get_max_run_day()
+    if date > max_run_day:
         raise argparse.ArgumentTypeError(f"{date} cannot be after {max_run_day}")
     return date
 
