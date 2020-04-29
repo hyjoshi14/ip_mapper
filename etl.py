@@ -1,7 +1,7 @@
 import argparse
 from datetime import datetime, timedelta
 
-from ip_mapper.extractor import get_raw_ipv4_data
+from ip_mapper.extractor import get_raw_ipv4_data, get_max_run_day
 from ip_mapper.loader import (
     get_user_country_distribution,
     load_ipv4_data,
@@ -12,8 +12,7 @@ from ip_mapper.transformer import transform_user_ip_addr_file
 
 
 def not_future_date(date):
-    max_run_day = (datetime.now() - timedelta(days=1)).strftime("%Y-%m-%d")
-    if date and date > max_run_day:
+    if date > get_max_run_day():
         raise argparse.ArgumentTypeError(f"{date} cannot be after {max_run_day}")
     return date
 
@@ -27,7 +26,7 @@ parser = argparse.ArgumentParser(
 parser.add_argument(
     "--date",
     dest="date",
-    default=None,
+    default=get_max_run_day(),
     help=("Date for which the ETL job is to be carried out." " Defaults to yesterday."),
     type=not_future_date,
 )

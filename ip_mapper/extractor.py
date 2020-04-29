@@ -22,6 +22,11 @@ HEADERS = [
 ]
 
 
+def get_max_run_day():
+    """Get the maximum date for which data should be available."""
+    return (datetime.now() - timedelta(days=1)).strftime("%Y-%m-%d")
+
+
 def get_raw_ipv4_data(date=None):
     """
     Obtain the raw IPV4 data for a given date.
@@ -35,7 +40,7 @@ def get_raw_ipv4_data(date=None):
         An iterator to the raw data
     """
     logging.info(f"Obtaining raw IPV4 data for: {date}")
-    date = date or (datetime.now() - timedelta(days=1)).strftime("%Y-%m-%d")
+    date = date or get_max_run_day()
     raw_data_url = get_raw_data_url(date)
     ipv4_history_page = get_ipv4_page(raw_data_url)
     file_address = get_ipv4_file_address(ipv4_history_page, date)
